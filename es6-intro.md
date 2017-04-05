@@ -51,6 +51,29 @@
 	console.log(obj); //{ first: 'apple', second: 'orange' }
 
 	obj.first = 'pork';
-	obj.second = 'beef;
+	obj.second = 'beef';
 	console.log(obj); //{ first: 'pork', second: 'beef' }
 	```
+## Destructuring
+
+- What is a structuring?
+
+	```js
+	// Structuring: store a collection in a data structure
+
+	var animals = [ 'lion', 'bear', 'rhino' ];
+	console.log(animals) // [ 'lion', 'bear', 'rhino' ]
+	```
+- What is destructuring?
+
+	```js
+	// Original syntax 
+	var foo = animals[0];
+	var bar = animals[1];
+	var baz = animals[2];
+
+	// ES6 syntax
+	var [foo, bar, baz] = animals;
+	```
+
+

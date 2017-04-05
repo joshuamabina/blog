@@ -75,5 +75,15 @@
 	// ES6 syntax
 	var [foo, bar, baz] = animals;
 	```
+## Spread operator
 
+> In a nutshell... The three dot operator
+
+```js
+function main(arg1, ...args) {
+	console.log(arg1, args);
+}
+
+main('hello', 'world', 'irabu', 'family', 'friends');
+```
 

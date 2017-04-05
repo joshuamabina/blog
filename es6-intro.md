@@ -113,3 +113,29 @@ console.log("The " + foo + " jumped over the " + bar);
 // ES6 syntax
 console.log(`The ${foo} jumped over the ${bar}`);
 ```
+
+## Classes
+
+> Create classes, getters, setters, extend and the like.
+
+```js
+"use strict";
+
+class Person {
+	constructor(name, lang) {
+		this.name = name;
+		this.lang = lang;
+	}
+
+	speaks() {
+		return `${this.name} speaks ${this.lang}`;
+	}
+};
+
+var foo = new Person('Magufuli', 'Swahili');
+console.log(foo);
+
+```
+
+
+

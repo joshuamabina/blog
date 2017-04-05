@@ -100,4 +100,16 @@ primes.map(function(prime) {
 
 // ES6 syntax
 primes.map((prime) => console.log(prime * 2));
-	```
+```
+## Template literals
+
+```js
+var foo = "cow";
+var bar = "moon";
+
+//Original syntax
+console.log("The " + foo + " jumped over the " + bar);
+
+// ES6 syntax
+console.log(`The ${foo} jumped over the ${bar}`);
+```

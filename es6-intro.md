@@ -86,4 +86,18 @@ function main(arg1, ...args) {
 
 main('hello', 'world', 'irabu', 'family', 'friends');
 ```
+## Arrow functions
 
+Commonly known to others as lambdas.
+
+```js
+var primes = [1, 2, 3, 5, 7];
+
+// Before ES6
+primes.map(function(prime) {
+	console.log(prime * 2);
+});
+
+// ES6 syntax
+primes.map((prime) => console.log(prime * 2));
+	```

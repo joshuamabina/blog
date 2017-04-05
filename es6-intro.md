@@ -136,6 +136,34 @@ var foo = new Person('Magufuli', 'Swahili');
 console.log(foo);
 
 ```
+## Generators (and Iterators)
 
+It **looks like** a function...
+
+```js
+function* foo() {
+	yield 'Hello world!';
+	yield 'Hello again!';
+} 
+```
+- Regular functions start with `function`. Generator functions start with `function*`.
+- Regular functions `return` stuff. Generator functions `yield` stuff.
+- Regular functions cannot stop themselves. Generator functions can.
+
+> Generators are not threads
+
+> When a generator runs, it runs in the same thread as a caller. The order of execution is sequential and deterministic, and never concurrent. 
+
+```bash
+> var obj = foo()
+{}
+> obj.next()
+{ value: 'Hello world!', done: false }
+> obj.next()
+{ value: 'Hello again!', done: true }
+```
+> Generators are iterators
+
+> All generators have a built-in implementation of `.next()` and `[Symbol.iterator]()`. One just writes the looping behavior.
 
 

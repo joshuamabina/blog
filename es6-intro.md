@@ -166,4 +166,40 @@ function* foo() {
 
 > All generators have a built-in implementation of `.next()` and `[Symbol.iterator]()`. One just writes the looping behavior.
 
+## Symbols
 
+The seventh data type.
+
+- Undefined
+- Null
+- Boolean
+- Number
+- String
+- Object
+- **Symbol**
+
+They aren't like anything else.
+
+```bash
+> typeof String()
+'string'
+
+> typeof Number()
+'number'
+
+> typeof Symbol()
+'symbol'
+```
+They are immutable, once created.
+
+- You can not set properties on them.
+- If using **use strict**, you'll get a TypeError.
+
+> Calling `Symbol()` generates a unique value without risking name collisions.
+
+```js
+var foo = new Symbol();
+
+var obj[foo] = "Hello, world!";
+console.log(obj[foo]); //Hello, world!
+```

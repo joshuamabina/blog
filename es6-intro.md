@@ -1,5 +1,10 @@
 # ES6 Intro
 
+## Pending
+
+- Proxies
+- Promises
+
 ## Variables 
 
 - **var**: original, function scope

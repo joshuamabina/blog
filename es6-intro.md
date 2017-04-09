@@ -2,7 +2,6 @@
 
 ## Pending
 
-- Proxies
 - Promises
 
 ## Variables 
@@ -208,3 +207,31 @@ var foo = new Symbol();
 var obj[foo] = "Hello, world!";
 console.log(obj[foo]); //Hello, world!
 ```
+## Proxy
+
+> *n.* The authority to act for another.
+
+> [Proxy - Definition and Meaning](https://www.wordnik.com/words/proxy)
+
+```js
+var person = new Proxy({}, {
+  get: function(target, key, receiver) {
+    console.log(`@get ${key}`);
+
+    // some custom logic
+
+    return Reflect.get(target, key, receiver);
+  },
+  set: function(target, key, value, receiver) {
+    console.log(`@set ${key}: ${value}`);
+
+    // some custom logic
+
+    return Reflect.set(target, key, value, receiver);
+  }
+});
+
+person.name = 'Papa Bear';
+console.log(person.name);
+```
+

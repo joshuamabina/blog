@@ -3,6 +3,7 @@
 ## Pending
 
 - Promises
+- Tooling: Webpack and Babel
 
 ## Variables 
 

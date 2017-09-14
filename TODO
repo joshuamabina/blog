@@ -14,6 +14,7 @@
 - Vim (3): Understanding Tabs
 - Vim (4): PHP Autocompletion
 - Vim (5): Java & Android
+- Vim (6): autocmd
 - TDD React.js by Example
 - TDD Vue.js by Example
 - Book Review: Advanced Application Architecture with Laravel 4
@@ -21,3 +22,4 @@
 - Book Review: TDD by Example (Laravel Approach)
 - Book Review: GOOS Guided by Tests
 - Zathura: First Impression
+- Spatie's Laravel Medialibrary: Diving Deeper!

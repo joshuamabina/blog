@@ -1,4 +1,4 @@
-# Git internals (1)
+# Git internals
 
 ## Plumbing and Porcelian
 

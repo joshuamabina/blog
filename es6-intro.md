@@ -5,88 +5,88 @@
 - Promises
 - Tooling: Webpack and Babel
 
-## Variables 
+## Variables
 
 - **var**: original, function scope
-	
-	```js
-	"use strict";
 
-	function() {
-		var foo = "foo";
+```js
+"use strict";
 
-		if(true) {
-			foo = "hello";
-			console.log(foo); //hello
-		}
+function() {
+var foo = "foo";
 
-		console.log(foo); //hello
+if(true) {
+foo = "hello";
+console.log(foo); //hello
+}
 
-	}
-	```
+console.log(foo); //hello
+
+}
+```
 
 - **let**: ES6, similar to var, block scope
 
-	```js
-	"use strict";
-	function() {
-		let bar = "bar";
-		
-		if(true) {
-			bar = "yellow";
-			console.log(bar); //yellow
-		}
+```js
+"use strict";
+function() {
+let bar = "bar";
 
-		console.log(bar); //bar
-	}
-	```
+if(true) {
+bar = "yellow";
+console.log(bar); //yellow
+}
+
+console.log(bar); //bar
+}
+```
 
 - **const**: ES6, cannot be re-assigned. Not to be confused with Immutable data types.
 
-	```js
-	"use strict";
+```js
+"use strict";
 
-	const baz = "baz";
-	baz = "beer"; //TypeError: Assignment to constant variable
+const baz = "baz";
+baz = "beer"; //TypeError: Assignment to constant variable
 
-	const obj = {
-		first: 'apple',
-		second: 'orange'
-	};
-	console.log(obj); //{ first: 'apple', second: 'orange' }
+const obj = {
+first: 'apple',
+second: 'orange'
+};
+console.log(obj); //{ first: 'apple', second: 'orange' }
 
-	obj.first = 'pork';
-	obj.second = 'beef';
-	console.log(obj); //{ first: 'pork', second: 'beef' }
-	```
+obj.first = 'pork';
+obj.second = 'beef';
+console.log(obj); //{ first: 'pork', second: 'beef' }
+```
 ## Destructuring
 
 - What is a structuring?
 
-	```js
-	// Structuring: store a collection in a data structure
+```js
+// Structuring: store a collection in a data structure
 
-	var animals = [ 'lion', 'bear', 'rhino' ];
-	console.log(animals) // [ 'lion', 'bear', 'rhino' ]
-	```
+var animals = [ 'lion', 'bear', 'rhino' ];
+console.log(animals) // [ 'lion', 'bear', 'rhino' ]
+```
 - What is destructuring?
 
-	```js
-	// Original syntax 
-	var foo = animals[0];
-	var bar = animals[1];
-	var baz = animals[2];
+```js
+// Original syntax 
+var foo = animals[0];
+var bar = animals[1];
+var baz = animals[2];
 
-	// ES6 syntax
-	var [foo, bar, baz] = animals;
-	```
+// ES6 syntax
+var [foo, bar, baz] = animals;
+```
 ## Spread operator
 
 > In a nutshell... The three dot operator
 
 ```js
 function main(arg1, ...args) {
-	console.log(arg1, args);
+console.log(arg1, args);
 }
 
 main('hello', 'world', 'irabu', 'family', 'friends');
@@ -100,7 +100,7 @@ var primes = [1, 2, 3, 5, 7];
 
 // Before ES6
 primes.map(function(prime) {
-	console.log(prime * 2);
+console.log(prime * 2);
 });
 
 // ES6 syntax
@@ -127,14 +127,14 @@ console.log(`The ${foo} jumped over the ${bar}`);
 "use strict";
 
 class Person {
-	constructor(name, lang) {
-		this.name = name;
-		this.lang = lang;
-	}
+constructor(name, lang) {
+this.name = name;
+this.lang = lang;
+}
 
-	speaks() {
-		return `${this.name} speaks ${this.lang}`;
-	}
+speaks() {
+return `${this.name} speaks ${this.lang}`;
+}
 };
 
 var foo = new Person('Magufuli', 'Swahili');
@@ -147,8 +147,8 @@ It **looks like** a function...
 
 ```js
 function* foo() {
-	yield 'Hello world!';
-	yield 'Hello again!';
+yield 'Hello world!';
+yield 'Hello again!';
 } 
 ```
 - Regular functions start with `function`. Generator functions start with `function*`.
@@ -216,20 +216,20 @@ console.log(obj[foo]); //Hello, world!
 
 ```js
 var person = new Proxy({}, {
-  get: function(target, key, receiver) {
-    console.log(`@get ${key}`);
+get: function(target, key, receiver) {
+console.log(`@get ${key}`);
 
-    // some custom logic
+// some custom logic
 
-    return Reflect.get(target, key, receiver);
-  },
-  set: function(target, key, value, receiver) {
-    console.log(`@set ${key}: ${value}`);
+return Reflect.get(target, key, receiver);
+},
+set: function(target, key, value, receiver) {
+console.log(`@set ${key}: ${value}`);
 
-    // some custom logic
+// some custom logic
 
-    return Reflect.set(target, key, value, receiver);
-  }
+return Reflect.set(target, key, value, receiver);
+}
 });
 
 person.name = 'Papa Bear';

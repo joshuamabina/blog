@@ -1,9 +1,8 @@
 # ES6 Intro
 
-## Pending
+## Overview
 
-- Promises
-- Tooling: Webpack and Babel
+> Work in progress
 
 ## Variables
 
@@ -12,16 +11,15 @@
 ```js
 "use strict";
 
-function() {
-var foo = "foo";
+function () {
+    var foo = "foo";
 
-if(true) {
-foo = "hello";
-console.log(foo); //hello
-}
+    if (true) {
+        foo = "hello";
+        console.log(foo); //output: hello
+    }
 
-console.log(foo); //hello
-
+    console.log(foo); //output: hello
 }
 ```
 
@@ -72,7 +70,7 @@ console.log(animals) // [ 'lion', 'bear', 'rhino' ]
 - What is destructuring?
 
 ```js
-// Original syntax 
+// Original syntax
 var foo = animals[0];
 var bar = animals[1];
 var baz = animals[2];
@@ -149,7 +147,7 @@ It **looks like** a function...
 function* foo() {
 yield 'Hello world!';
 yield 'Hello again!';
-} 
+}
 ```
 - Regular functions start with `function`. Generator functions start with `function*`.
 - Regular functions `return` stuff. Generator functions `yield` stuff.
@@ -157,7 +155,7 @@ yield 'Hello again!';
 
 > Generators are not threads
 
-> When a generator runs, it runs in the same thread as a caller. The order of execution is sequential and deterministic, and never concurrent. 
+> When a generator runs, it runs in the same thread as a caller. The order of execution is sequential and deterministic, and never concurrent.
 
 ```bash
 > var obj = foo()
@@ -235,4 +233,3 @@ return Reflect.set(target, key, value, receiver);
 person.name = 'Papa Bear';
 console.log(person.name);
 ```
-

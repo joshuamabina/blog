@@ -2,11 +2,9 @@
 
 December 31, 1999
 
-(If wip)
-
 **In this article**
 
-*Heads up! This is work in progress*
+*(If wip) Heads up! This is work in progress*
 
 Deserunt nostrum et voluptas velit dolore fugit blanditiis. Nisi voluptas rem velit soluta sit tempora temporibus odio. Deserunt et sint ut nulla harum ipsum. Labore dignissimos enim atque dolorum.
 

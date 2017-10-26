@@ -1,14 +1,23 @@
-## Laravel Deployment - Brain Dump!
+# Laravel Deployment - Brain Dump!
 
 > **Heads up!** All opinions are mine. Find yours!
 
 The following are some lessons I documented on deploying Laravel applications, mostly based on a shared-hosting context.
 
-### Server Requirements
+## Contents
 
-The Laravel framework has a few system requirements.
+- Laravel server requirements
+- Laravel dotenv is your friend
+- The resource directory
+- No need to deploy the entire `node_modules` directory
+- No need to deploy the entire `vendor` directory
+- Database dumps
+- Caching
+- Last words
 
-Make sure you server meets the following server requirements:
+## Laravel server requirements
+
+The Laravel framework has a few system requirements. Make sure you server meets the following:
 
 - PHP >= 7.0.0
 - OpenSSL PHP Extension
@@ -21,9 +30,9 @@ I wrote a script to test these server requirements.
 
 See [gistfile](https://gist.github.com/joshuamabina/9575e46ba9e70a416ba80d6870fa846f).
 
-### Laravel dotenv is your friend.
+## Laravel dotenv is your friend.
 
-#### What is it?
+### What is it?
 
 Dotenv files are **.ini files** on steriods.
 
@@ -42,7 +51,7 @@ Here's a section copied from my php.ini file:
 ; http://php.net/file-uploads
 file_uploads = On
 ```
-#### Why should you I use them?
+### Why should you I use them?
 
 Including your secret credentials in your source files, is not such a smart thing to do. They should be stored some place else. In your head, for instance.
 
@@ -62,7 +71,7 @@ DB_PASSWORD=secret
 
 Use `.env` or `.env.production` or `.env.testing` (notice the convention) to store configuration values specific to the respective dot-environment.
 
-#### Why the convention?
+### Why the convention?
 
 Lets look at some code:
 
@@ -76,7 +85,7 @@ $ php artisan key:generate --env=testing
 
 Convetions are good. They just work!
 
-#### Caveat: Don't source your credentials
+### Caveat: Don't source your credentials
 
 DO NOT EVER change `config/something.php` to store credentials.
 
@@ -95,13 +104,13 @@ DO NOT EVER change `config/something.php` to store credentials.
 
 I would gladly give anyone a rope for which they hang themselves before letting them dump credentials in a `config/database.php` for whatsoever sane reason they think they have.
 
-#### Caveat: Don't version your .env files
+### Caveat: Don't version your .env files
 
 The `.env[.production|.testing|.environment]` file is (and must) not be versioned.
 
 It is a common practice to stub all required environment variables in a `.env.example` file and version that file. So for testing, I would have (recall the convention) `.env.testing.example`.
 
-### No need to deploy the entire `vendor` directory.
+## No need to deploy the entire `vendor` directory.
 
 The vendor directory stores dependencies specified in your `composer.json`.
 
@@ -130,9 +139,9 @@ $ tar -zcvf /tmp/source.tar.gz .
 
 Safe and easy on the bandwidth. My boss would love this.
 
-### No need need to deploy the `node_modules` directory.
+## No need need to deploy the `node_modules` directory.
 
-#### A short walk down memory lane
+### A short walk down memory lane
 
 Node drastically changed how JavaScript development took form.
 
@@ -140,7 +149,7 @@ While it is true that the concept of sanely managing 3rd-party code has been aro
 
 Node and affiliates ploughed the JavaScript planet for the better. Then [bower](https://bower.io), [ender](http://www.enderjs.com/), [volo](http://volojs.org/) and everything else, quickly errupted from JavaScript's volcanic core, shaking the Internet's crust, hard.
 
-##### What is npm?
+### What is npm?
 
 Their [website](https://npmjs.com) so eloquently states, **&ldquo;npm is not a node package manager&rdquo;**.
 
@@ -152,7 +161,7 @@ Why npm does not stand for node package manager?
 
 \- [For more, read this long thread.](https://github.com/BloombergMedia/whatiscode/pull/34)
 
-##### The Story of Yarn - Yet another package manager.
+### The Story of Yarn - Yet another package manager.
 
 An npm alternative and a bower replacement.
 
@@ -174,7 +183,7 @@ The re-work on how npm gets the exact same `node_modules` everytime puts it slig
 
 [Read more on determinism - Yarn vs npm 5](HTTPs://yarnpkg.com/blog/2017/05/31/determinism/).
 
-##### Deploying without `node_modules`
+### Deploying without `node_modules`
 
 ```bash
 #install dependencies specified in package.json
@@ -192,7 +201,7 @@ tar -zcvf /tmp/source.tar.gz .
 
 The size of the `node_modules` directory is almost always frantically huge. With this simple optimization, off you go Santa's naughty list.
 
-### The resource directory
+## The resource directory
 
 Your `project/resources/assets` directory is your source's assets spouse. Do not set them apart.
 
@@ -224,7 +233,7 @@ In a nutshell:
 
 Is it not easy and nice to just think about deploying already optimized `app.css` and `app.js`?
 
-#### Database dumps
+## Database dumps
 
 Dump the latest snapshot of the database. Inspired by [lally elias](https://github.com/lykmapipo).
 
@@ -246,15 +255,15 @@ $ php artisan dump-database
 Created Database Dump: yyyy-mm-dd-hh-mm-ss.sql
 ```
 
-##### Cache and deploy
+## Caching
 
 - [ ] Assets
 - [ ] Configurations
 - [ ] Routes
 
-#### My last words
+## Last words
 
-##### A good thing no closures is. Yes, hrrmmm.
+### A good thing no closures is. Yes, hrrmmm.
 
 Caching fails if I throw closures in my route files. So, I do not. Plus, there's nothing there for me to digest at run-time.
 
@@ -262,13 +271,13 @@ French [KISS](https://en.wikipedia.org/wiki/KISS_principle) your route and confi
 
 No closures is sometimes a good thing.
 
-##### Shared hosting, the culprit of laravel hosting!
+### Shared hosting, the culprit of laravel hosting!
 
 - [ ] Common and straightforward
 - [ ] Symlinking `public_html` to` public`
 - [ ] Extending the \Illuminate\Foundation\Application class
 
-#### Who should I yell at?
+### Who should I yell at?
 
 Do not forget to dump all your slimy disgust to mabinajoshua@gmail.com. He sometimes reads his mail.
 

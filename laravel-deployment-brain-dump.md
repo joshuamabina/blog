@@ -18,6 +18,8 @@ The following are some lessons I documented on deploying Laravel applications, m
 - [Database Dumps](#database-dumps)
 - [Caching for performance](#caching-for-performance)
 - [Shared hosting](#shared-hosting)
+- [TODO Docker](#docker)
+- [TODO Envoyer/Forge](#envoyer)
 - [Last words](#last-words)
 
 <br>

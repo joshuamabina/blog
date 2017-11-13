@@ -293,26 +293,33 @@ Safe and easy on the bandwidth. My boss would love this.
 
 <br>
 
+<div id="#database-dumps"></div>
+
 ## Database Dumps
 
-Dump the latest snapshot of the database. Inspired by [lally elias](https://github.com/lykmapipo).
+Dump the latest state of the database. Inspired by [lally elias](https://github.com/lykmapipo).
 
 I think it is useful to have the latest database snapshot i.e. the schema and real seed-data, altogether, ready for deployment.
 
-So, how we would do it...
+So, usually, we would do it like...
 
 ```bash
 $ php artisan migrate:fresh --seed
 
-$ mysqldump -u root -p laravel > storage/dumps/yyyy-mm-dd.sql
+$ mysqldump -u root -p laravel > storage/dumps/$(date -u +"%FT%T").sql
 ```
 Now, imagine dragons...
 
 ```bash
-$ php artisan dump-database
+$ php artisan database:dump mysql
 
 Created Database Dump: yyyy-mm-dd-hh-mm-ss.sql
 ```
+
+For a more eloquent api, reputable documentation and a well-maintained code, please check out:
+
+- [larkinwhitaker/laravel-db-backup](https://github.com/larkinwhitaker/laravel-db-backup)
+- [spatie/laravel-backup](https://docs.spatie.be/laravel-backup/v5/introduction)
 
 <br>
 
@@ -331,7 +338,7 @@ Created Database Dump: yyyy-mm-dd-hh-mm-ss.sql
 ### Shared hosting
 
 - [ ] Common and straightforward
-- [ ] Symlinking `public_html` to` public`
+- [ ] Symlinking `public_html` to `public`
 - [ ] Extending the \Illuminate\Foundation\Application class
 
 <br>

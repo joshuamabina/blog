@@ -11,15 +11,16 @@ The following are some lessons I documented on deploying Laravel applications, m
 ## Contents
 
 - [Server Requirements](#server-requirements)
+- [TODO Server Configuration](#server-configuration)
 - [About Dotenv](#about-dotenv)
 - [Static Assets: css, sass, js and images](#static-assets)
 - [Node Modules](#node-modules)
 - [Composer Packages](#composer-packages)
 - [Database Dumps](#database-dumps)
-- [Caching for performance](#caching-for-performance)
-- [Shared hosting](#shared-hosting)
+- [Optmization](#optimization)
+- [TODO Shared Hosting](#shared-hosting)
+- [TODO Forge and Envoyer](#forge-and-envoyer)
 - [TODO Docker](#docker)
-- [TODO Envoyer/Forge](#envoyer)
 - [Last words](#last-words)
 
 <br>
@@ -311,7 +312,7 @@ $ mysqldump -u root -p laravel > storage/dumps/$(date -u +"%FT%T").sql
 Now, imagine dragons...
 
 ```bash
-$ php artisan database:dump mysql
+$ php artisan db:dump mysql
 
 Created Database Dump: yyyy-mm-dd-hh-mm-ss.sql
 ```
@@ -323,23 +324,15 @@ For a more eloquent api, reputable documentation and a well-maintained code, ple
 
 <br>
 
-<div id="#caching-for-performance"></div>
+<div id="#optimizing"></div>
 
-## Caching for performance
+## Optimizing
 
-- [ ] Assets
-- [ ] Configurations
-- [ ] Routes
+### Optimizing Autoloader
 
-<br>
+### Optimizing Configuration Loading
 
-<div id="#shared-hosting"></div>
-
-### Shared hosting
-
-- [ ] Common and straightforward
-- [ ] Symlinking `public_html` to `public`
-- [ ] Extending the \Illuminate\Foundation\Application class
+### Optimizing Route Loading
 
 <br>
 

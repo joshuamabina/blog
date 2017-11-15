@@ -330,9 +330,91 @@ For a more eloquent api, reputable documentation and a well-maintained code, ple
 
 ### Optimizing Autoloader
 
+Optimize Composer's autoloader by running the command below:
+
+```bash
+composer install -o | --optimize-autoloader
+```
+The command above regenerates a list of all classes that need to be included in the project.
+
+> **Note:**
+
+> Prior to Laravel 5.5, we could also achieve this by running: `php artisan dump:autoload`
+
+#### The Autoloading Story
+
+Not so long ago, only developers writing idiomatic OO code used one source file per class definition. Not a piece of cake. Referencing other class definitions meant, one had to include so many includes at the top of the file. Terrible.
+
+PHP autoloading came to the rescue, right about PHP 5's release. PHP developers could now magically make classes talk to each other. One less thing to worry about.
+
+A code example:
+
+```php
+<?php
+
+spl_autoload_register(function ($class_name) {
+
+    require_once $DOCUMENT_ROOT.“classes/class.”.$class_name.“.php”;
+
+});
+
+$foo = new Foo;
+$foo->hack();
+$foo->hack();
+$foo->hack();
+$foo->shipIt();
+$foo->fixInProduction();
+
+//...
+```
+Wow! It couldn't get any better than this. "I beg to differ", said the Composer.
+
+Composer introduced a much more straightforward API making it a gazillion times easier to autoload source files and vendor files.
+
+```json
+//composer.json
+{
+    "require": {
+        "guzzlehttp/guzzle": "4.*",
+        "monolog/monolog": "1.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Project\\": "src/Project/"
+        }
+    }
+}
+```
+
+I swear, it can not get any better than this. ;)
+
 ### Optimizing Configuration Loading
 
+Cut the framework some slack and optimize your configuration files by running the command below.
+
+```bash
+php artisan config:cache
+```
+
+Like we've previously covered, all of you application's configuration live in the `config` directory. The framework is responsible for making all those values available to application services whenever needed. Services like, connecting to the database, or, connecting to Google OAuth.
+
+This step simply combines all of the configuration values into a single cached file making it super-duper easy for the framework to retrieve those values, hence a boost on your application's general performance.
+
 ### Optimizing Route Loading
+
+Laravel is designed with a lot of special care to help developers look like they are being productive. It excels at being able to help them build very huge applications with less stress.
+
+When the features of the applications we build become bigger, so do the route files.
+
+Optimize the route files by running the command below:
+
+```bash
+php artisan route:cache
+```
+
+Routes need to be registered before they are used by the application. This command greatly speeds up the route registration process.
+
+Optimization FTW!
 
 <br>
 

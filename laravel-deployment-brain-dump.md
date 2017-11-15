@@ -11,7 +11,6 @@ The following are some lessons I documented on deploying Laravel applications, m
 ## Contents
 
 - [Server Requirements](#server-requirements)
-- [TODO Server Configuration](#server-configuration)
 - [About Dotenv](#about-dotenv)
 - [Static Assets: css, sass, js and images](#static-assets)
 - [Node Modules](#node-modules)
@@ -19,8 +18,6 @@ The following are some lessons I documented on deploying Laravel applications, m
 - [Database Dumps](#database-dumps)
 - [Optmization](#optimization)
 - [TODO Shared Hosting](#shared-hosting)
-- [TODO Forge and Envoyer](#forge-and-envoyer)
-- [TODO Docker](#docker)
 - [Last words](#last-words)
 
 <br>
@@ -170,8 +167,8 @@ In a nutshell:
     require('./bootstrap');
 
     /** custom libraries **/
-    require('./lib/ajax');
-    require('./lib/custom-cool-tool');
+    require('./libs/ajax');
+    require('./libs/custom-cool-tool');
 
 - Compile all static assets for specified environment
 
@@ -416,12 +413,6 @@ Routes need to be registered before they are used by the application. This comma
 
 Optimization FTW!
 
-<br>
-
-<div id="#last-words"></div>
-
-## Last words
-
 ### A good thing no closures is. Yes, hrrmmm.
 
 Caching fails if I throw closures in my route files. So, I do not. Plus, there's nothing there for me to digest at run-time.
@@ -430,14 +421,20 @@ French [KISS](https://en.wikipedia.org/wiki/KISS_principle) your route and confi
 
 No closures is sometimes a good thing.
 
-### TODO Shared hosting vs VPS
 
-> **tl;dr** Shared hosting, culprit of Laravel hosting.
+<br>
 
-### Who you should yell at
+<div id="#last-words"></div>
 
-Do not forget to dump all your slimy disgust to mabinajoshua@gmail.com. He sometimes empties his trash.
+## Last words
+
+### Contributing
 
 Found a typo? I accept pull requests.
+
+### Who should I yell at?
+
+I disgust you? Please, don't forget to share your slimy disgust along with this link on twitter. [Tag me!](https://twitter.com/joshuamabina)
+
 
 Cheers!

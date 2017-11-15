@@ -324,9 +324,9 @@ For a more eloquent api, reputable documentation and a well-maintained code, ple
 
 <br>
 
-<div id="#optimizing"></div>
+<div id="#optimization"></div>
 
-## Optimizing
+## Optimization
 
 ### Optimizing Autoloader
 

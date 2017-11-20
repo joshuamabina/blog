@@ -2,9 +2,7 @@
 
 Date: Thu Oct 19 14:08:18 2017 +0300
 
-The following are some lessons I documented on deploying Laravel applications, mostly based on a shared-hosting context.
-
-**Heads up!** All opinions are mine. Find yours!
+The following documents a handful of gotchas I picked up deploying Laravel applications on shared hosting servers.
 
 <br>
 
@@ -12,11 +10,11 @@ The following are some lessons I documented on deploying Laravel applications, m
 
 - [Server Requirements](#server-requirements)
 - [About Dotenv](#about-dotenv)
-- [Static Assets: css, sass, js and images](#static-assets)
+- [Static Assets: css, sass, js and img](#static-assets)
 - [Node Modules](#node-modules)
 - [Composer Packages](#composer-packages)
 - [Database Dumps](#database-dumps)
-- [Optmization](#optimization)
+- [Optimization](#optimization)
 - [Shared Hosting](#shared-hosting)
 - [Last words](#last-words)
 
@@ -35,9 +33,11 @@ The Laravel framework has a few system requirements. Make sure you server meets 
 - Tokenizer PHP Extension
 - XML PHP Extension
 
-I wrote a script to test these server requirements.
+I wrote a script to test these server requirements
 
 See [gistfile](https://gist.github.com/joshuamabina/9575e46ba9e70a416ba80d6870fa846f).
+
+I hear you! Too lazy to `phpinfo()`, ahh?
 
 <br>
 
@@ -49,7 +49,7 @@ See [gistfile](https://gist.github.com/joshuamabina/9575e46ba9e70a416ba80d6870fa
 
 Dotenv files are your friend. I like to think of them as **.ini files** on steriods. PHP uses ini files for configurations. Basically, simple text files composed of sections with key-value properties that define how a system is setup.
 
-Here's a section copied from my php.ini file:
+Here's a section copied from php.ini file:
 
 ```ini
 #/path/to/php/lib/php.ini
@@ -62,11 +62,11 @@ Here's a section copied from my php.ini file:
 ; http://php.net/file-uploads
 file_uploads = On
 ```
-### Why should you I use them?
+### Why should you we use them?
 
-Including your secret credentials in your source files, is not such a smart thing to do. They should be stored some place else. In your head, for instance.
+Including your secret credentials in your source files is not such a smart thing to do. They should be stored some place else. In your head, for starters.
 
-*PHPDotenv (requires a link to resource)* was designed to allow the use of different configuration values in different environments.
+[PHPDotenv](https://github.com/vlucas/phpdotenv) was designed to lessen the burden of configuring a project on different environments i.e. locally, staging, testing, production e.t.c.
 
 A simple example of a `.env` file:
 
@@ -79,7 +79,6 @@ DB_DATABASE=forge
 DB_USERNAME=forge
 DB_PASSWORD=secret
 ```
-
 Use `.env` or `.env.production` or `.env.testing` (notice the convention) to store configuration values specific to the respective dot-environment.
 
 ### Why the convention?
@@ -96,36 +95,37 @@ $ php artisan key:generate --env=testing
 
 Convetions are good. They just work!
 
-### Caveat: Don't source your credentials
+### Gotchas
+
+#### Don't source your secret credentials
 
 DO NOT EVER change `config/something.php` to store credentials.
 
 ```php
 #good
 'mysql' => [
-    'driver' => 'mysql',
-    'host' => env('DB_HOST', '127.0.0.1'),
-    'port' => env('DB_PORT', '3306'),
-    'database' => env('DB_DATABASE', 'fake_db'),
-    'username' => env('DB_USERNAME', 'fake_user'),
-    'password' => env('DB_PASSWORD', 'fake_secret'),
-    //...
+	'driver' => 'mysql',
+	'host' => env('DB_HOST', '127.0.0.1'),
+	'port' => env('DB_PORT', '3306'),
+	'database' => env('DB_DATABASE', 'fake_db'),
+	'username' => env('DB_USERNAME', 'fake_user'),
+	'password' => env('DB_PASSWORD', 'fake_secret'),
+	//...
 ],
 ```
+I would gladly give anyone a rope for which they hang themselves with, before letting them dump secret credentials in a `config/database.php` (and the like) for whatsoever sane reason they think they have.
 
-I would gladly give anyone a rope for which they hang themselves before letting them dump credentials in a `config/database.php` for whatsoever sane reason they think they have.
+#### Don't version your .env files
 
-### Caveat: Don't version your .env files
+The `.env[.production|.testing|.environment]` file must not be versioned.
 
-The `.env[.production|.testing|.environment]` file is (and must) not be versioned.
-
-It is a common practice to stub all required environment variables in a `.env.example` file and version that file. So for testing, I would have (recall the convention) `.env.testing.example`.
+It is a common practice to stub all required environment variables in a `.env.example` file and version that file. So for testing, we would have (recall the convention) `.env.testing.example`.
 
 <br>
 
 <div id="#static-assets"></div>
 
-## Static Assets: css, sass, js and images.
+## Static Assets: css, sass, js and img.
 
 > **tl;dr** DO NOT USE `public/assets` to store your source static assets.
 
@@ -133,52 +133,52 @@ Your `project/resources/assets` directory is your static assets' spouse. Do not 
 
 Here is a link to a nice article [Introducing Laravel Mix](https://mattstauffer.com/blog/introducing-laravel-mix-new-in-laravel-5-4/).
 
-In a nutshell:
+### In a nutshell:
 
-- Use package-manager to install dependencies:
+Use package-manager to install dependencies:
 
-    ```bash
-    $ yarn install
-    ```
-- Setup Laravel Mix:
+```bash
+$ yarn install
+```
+Setup Laravel Mix:
 
-    ```js
-    //file: project/webpack.mix.js
+```js
+//file: project/webpack.mix.js
 
-    const { mix } = require('laravel-mix');
+const { mix } = require('laravel-mix');
 
-    mix.sass('resources/assets/sass/app.scss', 'public/css')
-       .js('resources/assets/js/app.js', 'public/js')
-       .copy('resources/assets/img', 'public/img');
-    ```
-- Bootstrap your vendor assets:
+mix.sass('resources/assets/sass/app.scss', 'public/css')
+.js('resources/assets/js/app.js', 'public/js')
+.copy('resources/assets/img', 'public/img');
+```
+Bootstrap your vendor assets:
 
-    ```js
-    //file: project/resources/assets/js/bootstrap.js
+```js
+//file: project/resources/assets/js/bootstrap.js
 
-    window.$ = window.jQuery = require('jquery');
-    require('bootstrap-sass');
-    ```
+window.$ = window.jQuery = require('jquery');
+require('bootstrap-sass');
+```
 
-- Bundle your source and vendor assets together:
+Bundle your source and vendor assets together:
 
-    ```js
-    //file: project/resources/assets/js/app.js
-    require('./bootstrap');
+```js
+//file: project/resources/assets/js/app.js
+require('./bootstrap');
 
-    /** custom libraries **/
-    require('./libs/ajax');
-    require('./libs/custom-cool-tool');
+/** custom libraries **/
+require('./libs/ajaj');
+require('./libs/custom-cool-tool');
+```
+Compile all static assets for specified environment
 
-- Compile all static assets for specified environment
+```bash
+#for development
+$ yarn dev
 
-    ```bash
-    #for development
-    $ yarn dev
-
-    #for production
-    $ yarn production
-    ```
+#for production
+$ yarn production
+```
 
 Is it not easy and nice to just think about deploying already optimized stylesheets, javascripts and images?
 
@@ -192,11 +192,11 @@ Is it not easy and nice to just think about deploying already optimized styleshe
 
 ### A short walk down memory lane
 
-Node drastically changed how JavaScript development took form.
+While it is true that the concept of sanely managing 3rd-party code has been around for quite a long-time (git-submodules, for instance), it is also true that there hasn't been much for JavaScript specific tools until [Node.js](https://nodejs.org/en/).
 
-While it is true that the concept of sanely managing 3rd-party code has been around for quite a long-time (git-submodules, for instance), this was not much of the case in the JavaScript ecosystem.
+Node ploughed the JavaScript planet for the better, paving a way for [bower](https://bower.io), [ender](http://www.enderjs.com/), [volo](http://volojs.org/), now [Yarn](https://yarnpkg.com) and everything else errupting from JavaScript's volcanic core, shaking the internet's crust, hard.
 
-Node and affiliates ploughed the JavaScript planet for the better. Then [bower](https://bower.io), [ender](http://www.enderjs.com/), [volo](http://volojs.org/) and everything else, quickly errupted from JavaScript's volcanic core, shaking the Internet's crust, hard.
+Node drastically morphed the JavaScript ecosystem, for the better.
 
 ### What is npm?
 
@@ -206,17 +206,17 @@ Their [website](https://npmjs.com), so eloquently states, **&ldquo;npm does not 
 
 Why npm does not stand for node package manager?
 
-> To be more accurate, npm isn’t “the package manager for Node.js”, but “a package manager for JavaScript”.
+> To be more accurate, npm isn’t **"the package manager for Node.js"**, but **"a package manager for JavaScript"**.
 
-\- [For more, read this long thread.](https://github.com/BloombergMedia/whatiscode/pull/34)
+[~ For more, read this long thread.](https://github.com/BloombergMedia/whatiscode/pull/34)
 
-### The Story of Yarn - Yet another package manager.
+### The story of Yarn
 
 An npm alternative and a bower replacement.
 
-> ...psst! While Bower is maintained, we recommend using Yarn and Webpack for front-end projects read how to migrate!
+> ...psst! While Bower is maintained, we recommend using Yarn and Webpack for front-end projects...
 
-\- [The Bower Folks!](https://bower.io)
+[~ Bower folks!](https://bower.io)
 
 Built to re-use the rich existing ecosystem of developers and libraries.
 
@@ -226,17 +226,17 @@ Yarn engineers claim that it is fast, reliable, and a secure dependency manager.
 
 However, not so fast, npm 5 is here **(tires screeching)**.
 
-The re-work on how npm gets the exact same node modules everytime puts it slightly ahead ([not my words](https://github.com/siddharthkp/npm-cache-benchmark)).
+The re-work on how npm determines how to get the exact same node modules, everytime [puts it slightly ahead](https://github.com/siddharthkp/npm-cache-benchmark).
 
-> Determinism in the context of JavaScript package management is defined as always getting the exact same node_modules folder given a package.json and companion lock file.
+> Determinism in the context of JavaScript package management is defined as always getting the exact same node modules given a package.json and companion lock file.
 
-[Read more on determinism - Yarn vs npm 5](HTTPs://yarnpkg.com/blog/2017/05/31/determinism/).
+[~ Read more on determinism - Yarn vs npm 5](https://yarnpkg.com/blog/2017/05/31/determinism/).
 
-### Node modules directory
+### Node Modules
 
-All dependencies installed by `npm` are stored in the `node_modules` directory. Build tools like webpack refer to this directory for dependencies, compiles them together with sources assets and bundles them as instructed in the `webpack.mix.js` file.
+All dependencies installed by `npm` are stored in the `node_modules` directory. Build tools like webpack refer to this directory for dependencies, compiles them together with source assets and bundles them as instructed.
 
-Upon bundling completion, it is safe to remove the `node_modules` directory, compress the project and deploy.
+When bundling completes, it is safe to remove the `node_modules` directory, compress the project and deploy.
 
 ```bash
 #install dependencies specified in package.json
@@ -251,7 +251,6 @@ $ rm -rf node_modules/
 #Go bezerk!
 tar -zcvf /tmp/source.tar.gz .
 ```
-
 The size of the `node_modules` directory is almost always frantically huge. With this simple optimization, off you go Santa's naughty list.
 
 <br>
@@ -284,6 +283,7 @@ $ du vendor/
 30M    vendor/
 
 #deploy a production optimized vendor directory
+
 $ tar -zcvf /tmp/source.tar.gz .
 ```
 
@@ -295,7 +295,7 @@ Safe and easy on the bandwidth. My boss would love this.
 
 ## Database Dumps
 
-Dump the latest state of the database. Inspired by [lally elias](https://github.com/lykmapipo).
+> **tl;dr** Dump the latest state of the database. Inspired by [lally elias](https://github.com/lykmapipo).
 
 I think it is useful to have the latest database snapshot i.e. the schema and real seed-data, altogether, ready for deployment.
 
@@ -325,7 +325,7 @@ For a more eloquent api, reputable documentation and a well-maintained code, ple
 
 ## Optimization
 
-### Optimizing Autoloader
+### Optimizing autoloader
 
 Optimize Composer's autoloader by running the command below:
 
@@ -334,15 +334,15 @@ composer install -o | --optimize-autoloader
 ```
 The command above regenerates a list of all classes that need to be included in the project.
 
-> **Note:**
+> **Note:** Prior to Laravel 5.5, we could also achieve this by running: `php artisan dump:autoload`
 
-> Prior to Laravel 5.5, we could also achieve this by running: `php artisan dump:autoload`
+#### The autoloading story
 
-#### The Autoloading Story
+Not so long ago, referencing code defined in a separate class i.e. separate file, was not a piece of cake. It meant including a handful of include and/or require statements at the top of each class. Some said that this was one of the [biggest annoyances](http://php.net/manual/en/language.oop5.autoload.php).
 
-Not so long ago, only developers writing idiomatic OO code used one source file per class definition. Not a piece of cake. Referencing other class definitions meant, one had to include so many includes at the top of the file. Terrible.
+PHP 5's release brought a savior, `spl_autoload_register()` function which enabled classes and interfaces to be automatically loaded.
 
-PHP autoloading came to the rescue, right about PHP 5's release. PHP developers could now magically make classes talk to each other. One less thing to worry about.
+PHP developers could now magically make classes talk to each other. One less thing to worry about.
 
 A code example:
 
@@ -351,7 +351,7 @@ A code example:
 
 spl_autoload_register(function ($class_name) {
 
-    require_once $DOCUMENT_ROOT.“classes/class.”.$class_name.“.php”;
+  require_once $documeNT_ROOT.“classes/class.”.$class_name.“.php”;
 
 });
 
@@ -371,39 +371,39 @@ Composer introduced a much more straightforward API making it a gazillion times 
 ```json
 //composer.json
 {
-    "require": {
-        "guzzlehttp/guzzle": "4.*",
-        "monolog/monolog": "1.*"
-    },
-    "autoload": {
-        "psr-4": {
-            "Project\\": "src/Project/"
-        }
-    }
+	"require": {
+		"guzzlehttp/guzzle": "4.*",
+		"monolog/monolog": "1.*"
+	},
+	"autoload": {
+		"psr-4": {
+			"Project\\": "src/Project/"
+		}
+	}
 }
 ```
 
 I swear, it can not get any better than this. ;)
 
-### Optimizing Configuration Loading
+### Optimizing configuration loading
 
-Cut the framework some slack and optimize your configuration files by running the command below.
+> **tl;dr** Cut the framework some slack and optimize your configuration files.
+
+Like we've previously covered, all of you application's configuration live in the `config` directory. The framework is responsible for making all those values available to application services whenever needed. Theses services include: connecting database, connecting to Google OAuth e.t.c.
 
 ```bash
 php artisan config:cache
 ```
 
-Like we've previously covered, all of you application's configuration live in the `config` directory. The framework is responsible for making all those values available to application services whenever needed. Services like, connecting to the database, or, connecting to Google OAuth.
-
 This step simply combines all of the configuration values into a single cached file making it super-duper easy for the framework to retrieve those values, hence a boost on your application's general performance.
 
-### Optimizing Route Loading
+### Optimizing route loading
 
 Laravel is designed with a lot of special care to help developers look like they are being productive. It excels at being able to help them build very huge applications with less stress.
 
 When the features of the applications we build become bigger, so do the route files.
 
-Optimize the route files by running the command below:
+We need to optimize the route files by running the command below:
 
 ```bash
 php artisan route:cache
@@ -415,9 +415,9 @@ Optimization FTW!
 
 ### A good thing no closures is. Yes, hrrmmm.
 
-Caching fails if I throw closures in my route files. So, I do not. Plus, there's nothing there for me to digest at run-time.
+> **tl;dr** French [KISS](https://en.wikipedia.org/wiki/KISS_principle) your route and configuration files.
 
-French [KISS](https://en.wikipedia.org/wiki/KISS_principle) your route and configuration files.
+Caching fails if I throw closures in my route files. So, I do not. Plus, I do not think there's anyting there for me to digest at run-time. I have made french KISS the route and configuration files a principle.
 
 No closures is sometimes a good thing.
 
@@ -425,12 +425,16 @@ No closures is sometimes a good thing.
 
 <div id="#shared-hosting"></div>
 
-## Shared hosting
+## Shared Hosting
+
+> **tl;dr** We should be using a VPS.
+
+Sometimes a shared hosting server is all we got.
 
 The usual directory structure in a shared hosting server looks sort of the structure below:
 
 ```bash
-$ tree -L 1
+$ tree -a -L 1
 .
 ├── public_ftp/
 ├── public_html/ -> /www/
@@ -438,24 +442,24 @@ $ tree -L 1
 ├── var/
 ├── www/
 
-5 directories
+//... there be more directories and files
 
 ```
 
-The usual practice, i.e. deploying a static website is to dump everything in the `www/` directory. The easiest and straightforward way of deploying laravel apps takes a slightly different approach.
+The common practice, i.e. when deploying a static website is to dump everything into the `www/` directory. The easiest and straightforward way of deploying laravel apps takes a slightly different approach.
 
-One creates a project directory at the same level with `www/`; so something like `awesome/`.
+We create a project directory at the same level with `www/`; so something like `project/`.
 
-One dumps all of the project's source, maybe via FTP or git, if SSH access is available.
+We dump all of the project's source. Maybe via FTP or git, if SSH access is available.
 
 Gets a little trick from here on.
 
-One needs move all of the contents of `/awesome/public/` directory to `/www/` so that the project can be reached from the public domain.
+One needs move all of the contents of `/project/public/` directory into `/www/` so that the project can be reached from the public domain.
 
-An innocent public directory looks like the tree structure below:
+An innocent laravel project public directory looks like the tree structure below:
 
 ```bash
-$ tree -aL 1
+$ tree -a -L 1
 .
 ├── css/
 ├── favicon.ico
@@ -466,7 +470,7 @@ $ tree -aL 1
 ├── js/
 ├── mix-manifest.json
 ├── robots.txt
-└── storage/ -> /home/joshua/projects/sdgphotos/storage/app/public
+└── storage/ -> /home/joshua/projects/project/storage/app/public
 
 5 directories, 5 files
 
@@ -474,18 +478,17 @@ $ tree -aL 1
 
 So, dump all that into your server's `www/`.
 
-By now, you should be getting an error when you hit your public domain. If this the case, make sure your dotenv files are in order, and that they reflect the setup on your production environment.
+By now, we should be getting an error when we hit our public domain.
 
-Moving on, open the file `/awesome/public/index.php`. We will need to modify the path to where the framework registers the autoloader and boots up a Laravel application.
+Moving on, open the file `/project/public/index.php`. We will need to modify the path to where the framework registers the autoloader and boots up a Laravel application.
 
 We see the lines
 
 ```php
-
 //registers the autoloader
 require __DIR__.'/../vendor/autoload.php';
 
-//illuminates PHP development
+//illuminates the application
 $app = require_once __DIR__.'/../bootstrap/app.php';
 
 ```
@@ -493,13 +496,14 @@ We change them to
 
 ```php
 //registers the autoloader
-require __DIR__.'/../awesome/vendor/autoload.php';
+require __DIR__.'/../project/vendor/autoload.php';
 
-//illuminates PHP development
-$app = require_once __DIR__.'/../awesome/bootstrap/app.php';
+//illuminates the application
+$app = require_once __DIR__.'/../project/bootstrap/app.php';
 ```
+Make sure your dotenv files are in order, and that they reflect the setup on your production environment.
 
-If everything else was properly set, it'd be ok to hit the project from the public domain now.
+If everything else was properly set, now would be the right time to hit the project from http://ourdomain.com.
 
 ### Gotchas
 
@@ -507,7 +511,7 @@ If everything else was properly set, it'd be ok to hit the project from the publ
 
 It is cumbersome to run optimizations on a shared hosting server, especially if you don't have SSH access.
 
-One thing we could do to get around this, create an optimization handler for when we hit `/staging` from the address bar. Something like...
+One thing we could do to get around this, create an optimization handler for when we hit http://ourdomain.com/staging from the address bar. Something like...
 
 ```php
 <?php
@@ -541,24 +545,27 @@ class StagingController extends Controller
 		return redirect()->index(); //or something else.
 	}
 }
+
 ```
 
-Now, we hit the route `http://yourdomain/staging` and... big-badda-boom!
+Now, we hit the route http://ourdomain.com/staging and... **big-badda-boom!**
 
-See [gistfile](https://gist.github.com/joshuamabina/544e48c747a8ebba1b0142e5290a7728)
+See [gistfile](https://gist.github.com/joshuamabina/544e48c747a8ebba1b0142e5290a7728).
 
 <div id="#last-words"></div>
 
-## Last words
+## Last Words
 
 ### Contributing
 
 Found a typo? I accept pull requests.
 
-Think I'm wrong, or you know a better way to do something? Please open an issue, I'd really love to learn more.
+Think I'm wrong? Got a better idea? Please open an issue, I'd really love to learn more.
 
 ### Who should I yell at?
 
-Do I disgust you? Did you enjoy this piece? Please share your slime or mime with me [@joshuamabina](https://twitter.com/joshuamabina)
+Please share your happy or slimy mimes with me [@joshuamabina](https://twitter.com/joshuamabina).
+
+Please consider motivating me by starring the repository.
 
 Cheers!

@@ -555,9 +555,10 @@ See [gistfile](https://gist.github.com/joshuamabina/544e48c747a8ebba1b0142e5290a
 
 Found a typo? I accept pull requests.
 
+Think I'm wrong, or you know a better way to do something? Please open an issue, I'd really love to learn more.
+
 ### Who should I yell at?
 
-I disgust you? Please, don't forget to share your slimy disgust along with this link on twitter. [Tag me!](https://twitter.com/joshuamabina)
-
+Do I disgust you? Did you enjoy this piece? Please share your slime or mime with me [@joshuamabina](https://twitter.com/joshuamabina)
 
 Cheers!

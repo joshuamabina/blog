@@ -17,7 +17,7 @@ The following are some lessons I documented on deploying Laravel applications, m
 - [Composer Packages](#composer-packages)
 - [Database Dumps](#database-dumps)
 - [Optmization](#optimization)
-- [TODO Shared Hosting](#shared-hosting)
+- [Shared Hosting](#shared-hosting)
 - [Last words](#last-words)
 
 <br>
@@ -421,8 +421,131 @@ French [KISS](https://en.wikipedia.org/wiki/KISS_principle) your route and confi
 
 No closures is sometimes a good thing.
 
-
 <br>
+
+<div id="#shared-hosting"></div>
+
+## Shared hosting
+
+The usual directory structure in a shared hosting server looks sort of the structure below:
+
+```bash
+$ tree -L 1
+.
+├── public_ftp/
+├── public_html/ -> /www/
+├── tmp/
+├── var/
+├── www/
+
+5 directories
+
+```
+
+The usual practice, i.e. deploying a static website is to dump everything in the `www/` directory. The easiest and straightforward way of deploying laravel apps takes a slightly different approach.
+
+One creates a project directory at the same level with `www/`; so something like `awesome/`.
+
+One dumps all of the project's source, maybe via FTP or git, if SSH access is available.
+
+Gets a little trick from here on.
+
+One needs move all of the contents of `/awesome/public/` directory to `/www/` so that the project can be reached from the public domain.
+
+An innocent public directory looks like the tree structure below:
+
+```bash
+$ tree -aL 1
+.
+├── css/
+├── favicon.ico
+├── fonts/
+├── .htaccess
+├── img/
+├── index.php
+├── js/
+├── mix-manifest.json
+├── robots.txt
+└── storage/ -> /home/joshua/projects/sdgphotos/storage/app/public
+
+5 directories, 5 files
+
+```
+
+So, dump all that into your server's `www/`.
+
+By now, you should be getting an error when you hit your public domain. If this the case, make sure your dotenv files are in order, and that they reflect the setup on your production environment.
+
+Moving on, open the file `/awesome/public/index.php`. We will need to modify the path to where the framework registers the autoloader and boots up a Laravel application.
+
+We see the lines
+
+```php
+
+//registers the autoloader
+require __DIR__.'/../vendor/autoload.php';
+
+//illuminates PHP development
+$app = require_once __DIR__.'/../bootstrap/app.php';
+
+```
+We change them to
+
+```php
+//registers the autoloader
+require __DIR__.'/../awesome/vendor/autoload.php';
+
+//illuminates PHP development
+$app = require_once __DIR__.'/../awesome/bootstrap/app.php';
+```
+
+If everything else was properly set, it'd be ok to hit the project from the public domain now.
+
+### Gotchas
+
+#### Optimizing
+
+It is cumbersome to run optimizations on a shared hosting server, especially if you don't have SSH access.
+
+One thing we could do to get around this, create an optimization handler for when we hit `/staging` from the address bar. Something like...
+
+```php
+<?php
+//...
+
+class StagingController extends Controller
+{
+	public function __construct()
+	{
+		//checks whether staging environment
+		$this->middleware('staging');
+	}
+
+	public function index()
+	{
+		//create storage link
+		Artisan::call('storage:link');
+
+		//clear stuff...
+		Artisan::call('view:clear');
+		Artisan::call('cache:clear');
+		Artisan::call('route:clear');
+		Artisan::call('config:clear');
+		Artisan::call('clear-compiled');
+		Artisan::call('medialibrary:clear');
+
+		//cache stuff...
+		Artisan::call('route:cache');
+		Artisan::call('config:cache');
+
+		return redirect()->index(); //or something else.
+	}
+}
+```
+
+Now, we hit the route `http://yourdomain/staging` and... big-badda-boom!
+
+See [gistfile](https://gist.github.com/joshuamabina/544e48c747a8ebba1b0142e5290a7728)
 
 <div id="#last-words"></div>
 

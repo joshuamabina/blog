@@ -542,7 +542,7 @@ class StagingController extends Controller
 		Artisan::call('route:cache');
 		Artisan::call('config:cache');
 
-		return redirect()->index(); //or something else.
+		return redirect()->route('home'); //or something else.
 	}
 }
 

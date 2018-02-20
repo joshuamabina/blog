@@ -1,3 +1,1 @@
-My blog posts
-
-- [Laravel Deployment - Brain Dump](laravel-deployment-brain-dump.md)
+#### 2017-10-19 [Laravel Deployment - Brain Dump](https://github.com/joshuamabina/blog/issues/1)

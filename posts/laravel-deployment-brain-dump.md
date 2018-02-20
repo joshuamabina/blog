@@ -1,27 +1,5 @@
 # Laravel Deployment - Brain Dump!
 
-Date: Thu Oct 19 14:08:18 2017 +0300
-
-The following documents a handful of gotchas I picked up deploying Laravel applications on shared hosting servers.
-
-<br>
-
-## Contents
-
-- [Server Requirements](#server-requirements)
-- [About Dotenv](#about-dotenv)
-- [Static Assets: css, sass, js and img](#static-assets)
-- [Node Modules](#node-modules)
-- [Composer Packages](#composer-packages)
-- [Database Dumps](#database-dumps)
-- [Optimization](#optimization)
-- [Shared Hosting](#shared-hosting)
-- [Last words](#last-words)
-
-<br>
-
-<div id="#server-requirements"></div>
-
 ## Server Requirements
 
 The Laravel framework has a few system requirements. Make sure you server meets the following:
@@ -40,8 +18,6 @@ See [gistfile](https://gist.github.com/joshuamabina/9575e46ba9e70a416ba80d6870fa
 I hear you! Too lazy to `phpinfo()`, ahh?
 
 <br>
-
-<div id="#about-dotenv"></div>
 
 ## About Dotenv
 
@@ -123,8 +99,6 @@ It is a common practice to stub all required environment variables in a `.env.ex
 
 <br>
 
-<div id="#static-assets"></div>
-
 ## Static Assets: css, sass, js and img.
 
 > **tl;dr** DO NOT USE `public/assets` to store your source static assets.
@@ -183,8 +157,6 @@ $ yarn production
 Is it not easy and nice to just think about deploying already optimized stylesheets, javascripts and images?
 
 <br>
-
-<div id="#node-modules"></div>
 
 ## Node Modules
 
@@ -255,8 +227,6 @@ The size of the `node_modules` directory is almost always frantically huge. With
 
 <br>
 
-<div id="#composer-packages"></div>
-
 ## Composer Packages
 
 > **tl;dr** No need to deploy the entire `vendor` directory.
@@ -291,8 +261,6 @@ Safe and easy on the bandwidth. My boss would love this.
 
 <br>
 
-<div id="#database-dumps"></div>
-
 ## Database Dumps
 
 > **tl;dr** Dump the latest state of the database. Inspired by [lally elias](https://github.com/lykmapipo).
@@ -320,8 +288,6 @@ For a more eloquent api, reputable documentation and a well-maintained code, ple
 - [spatie/laravel-backup](https://docs.spatie.be/laravel-backup/v5/introduction)
 
 <br>
-
-<div id="#optimization"></div>
 
 ## Optimization
 
@@ -422,8 +388,6 @@ Caching fails if I throw closures in my route files. So, I do not. Plus, I do no
 No closures is sometimes a good thing.
 
 <br>
-
-<div id="#shared-hosting"></div>
 
 ## Shared Hosting
 
@@ -551,8 +515,6 @@ class StagingController extends Controller
 Now, we hit the route http://ourdomain.com/staging and... **big-badda-boom!**
 
 See [gistfile](https://gist.github.com/joshuamabina/544e48c747a8ebba1b0142e5290a7728).
-
-<div id="#last-words"></div>
 
 ## Last Words
 

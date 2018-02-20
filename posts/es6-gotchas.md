@@ -1,4 +1,13 @@
-# ES6 Intro
+# ES6 Gotchas!
+
+- Hoisting: var vs let/const
+- Temporal dead zone: var vs let/const
+- IIFEs vs Blocks
+- Immutability: var vs const
+- Lexical value of this
+- String: includes, repeat, template literals
+- Destructuring - what is structuring
+
 
 ## Overview
 
@@ -26,16 +35,15 @@ function () {
 - **let**: ES6, similar to var, block scope
 
 ```js
-"use strict";
-function() {
-let bar = "bar";
+function () {
+    var foo = "foo";
 
-if(true) {
-bar = "yellow";
-console.log(bar); //yellow
-}
+    if (true) {
+        foo = "hello";
+        console.log(foo); //output: hello
+    }
 
-console.log(bar); //bar
+    console.log(foo); //output: foo
 }
 ```
 

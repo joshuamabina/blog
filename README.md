@@ -1,3 +1,4 @@
+#### 2018-08-30 [ES6 & Beyond: Gotchas](https://github.com/joshuamabina/blog/issues/6)
 #### 2018-08-29 [Hello, RSpec!](https://github.com/joshuamabina/blog/issues/10)
 #### 2018-08-23 [Hello, Supertest!](https://github.com/joshuamabina/blog/issues/11)
 #### 2018-07-26 [Artisan Commands: A Quickie!](https://github.com/joshuamabina/blog/issues/8)

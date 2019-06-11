@@ -1,13 +1,13 @@
-from node:8
+FROM node:8
 
-workdir /usr/src/app
+WORKDIR /usr/src/app
 
-copy package*.json ./
+COPY package*.json ./
 
-run npm install
+RUN npm install
 
-copy . .
+COPY . .
 
-expose 3000
+EXPOSE 3000
 
-cmd ["npm", "start"]
+CMD ["npm", "start"]

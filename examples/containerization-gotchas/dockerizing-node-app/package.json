@@ -1,0 +1,31 @@
+{
+  "name": "docker-node",
+  "version": "1.0.0",
+  "description": "A dockerizing node.js app gist",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gist.github.com/4bf2a82dc64410d7c82b2dee90e742d7.git"
+  },
+  "keywords": [
+    "gist",
+    "docker",
+    "node",
+    "javascript",
+    "express"
+  ],
+  "author": "Joshua Mabina <mabinajoshua@gmail.com>",
+  "license": "WTFPL",
+  "bugs": {
+    "url": "https://gist.github.com/4bf2a82dc64410d7c82b2dee90e742d7"
+  },
+  "homepage": "https://gist.github.com/4bf2a82dc64410d7c82b2dee90e742d7",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {}
+}

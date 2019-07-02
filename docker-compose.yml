@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  web:
+    # specify a custom node
+    container_name: docker-node
+
+    # pull from the specified image registry
+    image: joshuamabina/docker-node:475839f
+
+    ports:
+      # expose the same port number to the host machine
+      - 3000:3000

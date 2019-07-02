@@ -1,10 +1,1 @@
-#### 2018-08-30 [JavaScript is Object-oriented](https://github.com/joshuamabina/blog/issues/7)
-#### 2018-08-30 [ES6 & Beyond: Gotchas](https://github.com/joshuamabina/blog/issues/6)
-#### 2018-08-29 [Hello, RSpec!](https://github.com/joshuamabina/blog/issues/10)
-#### 2018-08-23 [Hello, Supertest!](https://github.com/joshuamabina/blog/issues/11)
-#### 2018-07-26 [Artisan Commands: A Quickie!](https://github.com/joshuamabina/blog/issues/8)
-#### 2018-04-12 [What PHP can be](https://github.com/joshuamabina/blog/issues/5)
-#### 2018-04-12 [Explaining web workers](https://github.com/joshuamabina/blog/issues/4)
-#### 2018-04-12 [Do we really need this?](https://github.com/joshuamabina/blog/issues/3)
-#### 2018-03-05 [Project from Hell](https://github.com/joshuamabina/blog/issues/2)
-#### 2017-10-19 [Laravel Deployment - Brain Dump](https://github.com/joshuamabina/blog/issues/1)
+Awesome collection of code-bases my blog refers to, at [medium.com/@joshuamabina](https://medium.com/@joshuamabina).

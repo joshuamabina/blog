@@ -1,1 +1,1 @@
-Awesome collection of code-bases my blog refers to, at [medium.com/@joshuamabina](https://medium.com/@joshuamabina).
+Awesome collection of code-bases for [medium.com/@joshuamabina](https://medium.com/@joshuamabina) to refer to.
